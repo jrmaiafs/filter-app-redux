@@ -1,7 +1,11 @@
 import React from "react";
-import data from "./store/data";
+import { useSelector } from "react-redux";
+// import data from "./store/data";
+import { uProductDataArray } from "./store/products";
 
 const Products = () => {
+  const data = useSelector(uProductDataArray);
+  
   return (
     <table>
       <thead>
@@ -12,7 +16,7 @@ const Products = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((product) => (
+        {data?.map((product) => (
           <tr key={product.id}>
             <td>{product.product}</td>
             <td>{product.price}</td>

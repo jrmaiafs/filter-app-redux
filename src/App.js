@@ -7,7 +7,6 @@ import Filters from "./Filters";
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.products);
-  console.log(state);
   return (
     <div className="App">
       <Filters />

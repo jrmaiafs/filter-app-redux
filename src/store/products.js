@@ -12,11 +12,13 @@ const slice = createSlice({
     },
   },
   reducers: {
-    incrementar(state) {
-      return (state = state + 1);
+    setFilter(state, action) {
+      console.log();
+
+      state.filters = action.payload;
     },
-    reduzir(state) {
-      return (state = state - 1);
+    setPrice(state, action) {
+      state.pricers[action.payload.name] = action.payload.value;
     },
   },
 });
@@ -25,6 +27,19 @@ export const uDataArrayColor = ({ products }) => {
   return Array.from(new Set(products.data?.map((product) => product.color)));
 };
 
-export const { incrementar, reduzir } = slice.actions;
+export const uProductDataArray = ({ products }) => {
+  return data
+    .filter(
+      (product) =>
+        !products.filters.length || products.filters.includes(product.color)
+    )
+    .filter(
+      (price) =>
+        (!products.pricers.max || price.price < products.pricers.max) &&
+        (!products.pricers.min || price.price > products.pricers.min)
+    );
+};
+
+export const { setFilter, setPrice } = slice.actions;
 
 export default slice.reducer;
