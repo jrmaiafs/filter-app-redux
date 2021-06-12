@@ -1,11 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
-// import data from "./store/data";
-import { uProductDataArray } from "./store/products";
+
+const filterColors = (colors) => (product) =>
+  !colors.length || colors.includes(product.color);
+
+const filterPrices = (prices) => (product) =>
+  (!prices.max || product.price <= prices.max) &&
+  (!prices.min || product.price >= prices.min);
+
+export const filterProducts = ({ products }) => {
+  const { data, filters } = products;
+  return data
+    .filter(filterColors(filters.colors))
+    .filter(filterPrices(filters.prices));
+};
 
 const Products = () => {
-  const data = useSelector(uProductDataArray);
-  
+  const data = useSelector(filterProducts);
+
   return (
     <table>
       <thead>
@@ -16,11 +28,11 @@ const Products = () => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((product) => (
-          <tr key={product.id}>
-            <td>{product.product}</td>
-            <td>{product.price}</td>
-            <td>{product.color}</td>
+        {data?.map(({ id, product, price, color }) => (
+          <tr key={id}>
+            <td>{product}</td>
+            <td>{price}</td>
+            <td>{color}</td>
           </tr>
         ))}
       </tbody>

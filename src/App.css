@@ -2,8 +2,49 @@ body {
   margin-top: 4rem;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: block;
+  margin: 0 auto;
+}
+
+input[type="checkbox"] {
+  margin-left: 8px;
+}
+
+input[type="number"] + input[type="number"] {
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-top: 0.5rem;
+}
+
+label + label {
+  margin-left: 10px;
+  margin-bottom: 0.5rem;
+}
+
+input[type="number"] {
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto;
+  padding: 0px;
+}
+
 table {
   border: 1px solid;
+  width: 320px;
+  margin-top: 1rem;
 }
 tr:nth-child(even) {
   background: #eee;
@@ -23,9 +64,4 @@ thead {
 
 thead th {
   padding: 0.5rem 1rem;
-}
-
-input[type="number"] {
-  display: block;
-  margin: 0.5rem 0;
 }

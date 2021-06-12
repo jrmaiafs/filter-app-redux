@@ -1,38 +1,39 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilter, setPrice, uDataArrayColor } from "./store/products";
+import { changeFilters, selectUniqueColors } from "./store/products";
 
 const Filters = () => {
   const [priceMax, setPriceMax] = React.useState("");
   const [priceMin, setPriceMin] = React.useState("");
-  const [colorsCheckbox, setColorsCheckbox] = React.useState([]);
-  const data = useSelector(uDataArrayColor);
-  const { pricers } = useSelector((state) => state.products);
+  const [selectedColors, setSelectedColors] = React.useState([]);
+  const data = useSelector(selectUniqueColors);
   const dispatch = useDispatch();
 
   function handleCheckbox({ target }) {
     if (target.checked) {
-      const newArray = colorsCheckbox.filter((color) => color !== target.value);
-      setColorsCheckbox([...newArray, target.value]);
+      setSelectedColors([...selectedColors, target.value]);
     } else {
-      setColorsCheckbox(
-        colorsCheckbox.filter((color) => color !== target.value)
+      setSelectedColors(
+        selectedColors.filter((color) => color !== target.value)
       );
     }
   }
 
   function isChecked(color) {
-    return colorsCheckbox?.includes(color);
+    return selectedColors?.includes(color);
   }
 
   React.useEffect(() => {
-    dispatch(setFilter(colorsCheckbox));
-  }, [colorsCheckbox, dispatch]);
+    dispatch(changeFilters({ name: "colors", value: selectedColors }));
+  }, [selectedColors, dispatch]);
 
   React.useEffect(() => {
-    console.log(priceMax, priceMin);
-    dispatch(setPrice({ name: "max", value: Number(priceMax) }));
-    dispatch(setPrice({ name: "min", value: Number(priceMin) }));
+    dispatch(
+      changeFilters({
+        name: "prices",
+        value: { min: Number(priceMin), max: Number(priceMax) },
+      })
+    );
   }, [priceMax, priceMin, dispatch]);
 
   return (
